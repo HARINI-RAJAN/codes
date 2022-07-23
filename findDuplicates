@@ -1,0 +1,20 @@
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> list=new ArrayList<Integer>();
+        //this logic is applicable only if nums[i] is in the range [1,n] and n being the max size of the array
+        for(int i=0;i<nums.length;i++)
+        {
+            //index of num-1, to avoid IOE ,suppose arr length=8, and this would have number 8> so for arr[8] would be IOE
+            int index=Math.abs(nums[i])-1;
+            //if its already negative, the nums[i] was already encountered before
+            if(nums[index]<0)
+            {
+                 //add nums[i] to the list as its a duplicate
+                list.add(Math.abs(nums[i]));
+            }
+            //make the value in num[index] as negative, to mark it as visited
+            nums[index]=-nums[index];
+        }
+        return list;
+    }
+}
