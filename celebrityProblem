@@ -4,31 +4,40 @@ class Solution
     Stack<Integer> stack=new Stack<Integer>();
     int ans=-1;
     int isCelebrity(int M[][], int n,int num)
-    {
+    { 
+    //a celebrity knows no one and everyone should know celebrity -> if any one this doesn't satisfy return -1
         for(int j=0;j<n;j++)
         {
             if(j!=num && (M[num][j]==1 || M[j][num]!=1))
             return -1;
         }
+        //return num if all satisfies
         return num;
     }
     int celebrity(int M[][], int n)
     {
+    //push all indices to stack
     	for(int i=n-1;i>=0;i--)
     	{
     	    stack.push(i);
     	}
+        //pop two elements at a time
     	while(stack.size()>1)
     	{
     	int i=stack.pop();
     	int j=stack.pop();
+        //if both of them know each other, neither of them is a celebrity
     	if(M[i][j]==1 && M[j][i]==1)
     	continue;
+        //if j knows i, j is not celebrity, so ignoring j and pushing i
     	if(M[j][i]==1)
     	stack.push(i);
+        //if i knows j,then is i not celebrity, so ignoring i and pushing j
     	if(M[i][j]==1)
     	stack.push(j);
     	}
+        //stack will be left with potential celeb candidates
+        //checking whether any of them is a celebrity or not
     	while(!stack.isEmpty())
     	{
     	    int num=stack.pop();
