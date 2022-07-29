@@ -1,0 +1,61 @@
+class Solution
+{
+  //Function to find largest rectangular area possible in a given histogram.
+  public static long getMaxArea(long hist[], long n) 
+  {
+     Stack<Integer> preMin=new Stack<>();
+     Stack<Integer> nextMin=new Stack<>();
+     int[] preMinArr=new int[(int) n];
+     int[] nextMinArr=new int[(int) n];
+     int num=(int) n;
+     preMin.push(num-1);
+     
+     //creating array to store previousMin value's index
+     
+     for(int i=num-2;i>=0;i--)
+     {
+         int val=(int) hist[i];
+         while(!preMin.isEmpty() && hist[i]<hist[preMin.peek()])
+         {
+             preMinArr[preMin.peek()]=i;
+             preMin.pop();
+         }
+         preMin.push(i);
+     }
+     while(!preMin.isEmpty())
+     {
+         preMinArr[preMin.peek()]=-1;
+         preMin.pop();
+     }
+     nextMin.push(0);
+     
+     // creating an array to store nextMinimum value's index
+     for(int i=1;i<num;i++)
+     {
+         int val=(int) hist[i];
+         while(!nextMin.isEmpty() && val<hist[nextMin.peek()])
+         {
+             nextMinArr[nextMin.peek()]=i;
+             nextMin.pop();
+         }
+         nextMin.push(i);
+     }
+     while(!nextMin.isEmpty())
+     {
+         nextMinArr[nextMin.peek()]=num;
+         nextMin.pop();
+     }
+     long maxArea=0;
+     
+     //maxArea for a particular bar is the (hist[i] * diff between the two indexes)
+     
+     for(int i=0;i<num;i++)
+     {
+         long area=(hist[i]) * (nextMinArr[i]-preMinArr[i]-1);
+         if(area>maxArea)
+         maxArea=area;
+     }
+     return maxArea;
+  }
+      
+}
