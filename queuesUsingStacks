@@ -1,0 +1,36 @@
+class Queue
+{
+    Stack<Integer> input = new Stack<Integer>(); 
+    Stack<Integer> output = new Stack<Integer>(); 
+    
+    /*The method pop which return the element poped out of the stack*/
+    int dequeue()
+    {
+	    if(input.isEmpty())
+	    return -1;
+	    //input to output stack,so that the bottom elemet becomes top
+      
+	    while(!input.isEmpty())
+	    {
+	        output.push(input.pop());
+	    }
+      
+	    //remove the top element
+      
+	    int n=output.pop();
+      
+	    //put all elements back in input stack
+      
+	    while(!output.isEmpty())
+	    {
+	        input.push(output.pop());
+	    }
+	    return n;
+    }
+	
+    /* The method push to push element into the stack */
+    void enqueue(int x)
+    {
+	    input.push(x);	
+    }
+}
