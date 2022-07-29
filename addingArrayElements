@@ -1,0 +1,28 @@
+class Solution {
+    int minOperations(int[] arr, int n, int k) {
+        Queue<Integer> q
+            = new PriorityQueue<Integer>();
+            int count=0;
+           
+        for(int i=0;i<n;i++)
+        {
+            q.add(arr[i]);
+        }
+        if(q.peek()>=k)
+        return 0;
+        while(q.peek()<k && q.size()>1)
+        {
+            int num1=q.poll();
+            int num2=q.poll();
+            int sum=num1+num2;
+            q.add(sum);
+            count++;
+        }
+        if(q.peek()<k && q.size()==1)
+        return -1;
+        else
+        return count;
+    }
+     //TC for adding element to Queue -> logn
+            //so adding n elements-> O(nlogn)
+}
