@@ -1,0 +1,48 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class TestClass {
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int m=sc.nextInt();
+		int x=sc.nextInt();
+		int[] A=new int[n];
+		int[] B=new int[m];
+		for(int i=0;i<n;i++)
+		{
+			A[i]=sc.nextInt();
+		}	
+		for(int i=0;i<m;i++)
+		{
+			B[i]=sc.nextInt();
+		}
+		
+		//new array to store the distance between ticket and cinema
+		int[] B1=new int[m];
+		for(int i=0;i<m;i++)
+		{
+			B1[i]=Math.abs(x-B[i]);
+		}
+		//finding min time taken by each person to reach the x(cinema)
+		for(int i=0;i<n;i++)
+		{
+			int min=Integer.MAX_VALUE;
+			for(int j=0;j<m;j++)
+			{
+				//abs distance between person and ticket + ticket to cinema
+				//int dist= Math.abs(A[i]-B[j]) + Math.abs(B[j]-x) ->to do directly without addtional array
+				int dist=Math.abs(A[i]-B[j])+B1[j];
+				if(dist<min)
+					min=dist;
+			}
+			A[i]=min;
+		}
+		//the maximum of the minimum time required for all, is the min time required in total
+		Arrays.sort(A);
+		System.out.println(A[n-1]);
+	}
+//TC: O(n*m)
+	//sc: O(m) //creating a new array to store |B-x|, can also do directly without this
+}
