@@ -1,0 +1,27 @@
+class Solution
+{
+    //Function to find starting point where the truck can start to get through
+    //the complete circle without exhausting its petrol in between.
+    int tour(int petrol[], int distance[])
+    {
+        int deficit=0;
+        int petrolRem=0;
+        int start=0;
+       for(int i=0;i<petrol.length;i++)
+       {
+           petrolRem+=petrol[i]-distance[i];
+           //deficit keeps track of the additional petrol needed
+           if(petrolRem<0)
+           {
+               deficit+=petrolRem;
+               start=i+1;
+               petrolRem=0;
+           }
+       }
+       //so at the end of petrolpumps, petrol remaining should be equal
+       //or greater than the deficit we hav calculated so far, to make a circular tour
+       return (petrolRem+deficit)>=0? start : -1;
+    }
+    //TC: O(n)
+    //SC: O(1)
+}
