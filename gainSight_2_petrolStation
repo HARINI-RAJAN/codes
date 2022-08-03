@@ -1,0 +1,97 @@
+//{ Driver Code Starts
+import java.util.*;
+
+
+class PetrolPump2
+{
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int n=sc.nextInt();
+		int m=sc.nextInt();
+		int k=sc.nextInt();
+		int[] closed=new int[m];
+		for(int i=0;i<m;i++)
+		{
+			closed[i]=sc.nextInt();
+		}
+		int[] cost=new int[k];
+		for(int i=0;i<k;i++)
+		{
+		cost[i]=sc.nextInt();	
+		}
+		Solution onj=new Solution();
+		System.out.println(onj.tour(n,m,k,closed,cost));
+	}
+}
+// } Driver Code Ends
+
+
+// In java function tour() takes two arguments array of petrol
+// and array of distance
+
+class Solution
+{
+    int tour(int n,int m,int k,int[] closed,int[] cost)
+    {
+        Arrays.sort(closed);
+        if(closed[0]==0)
+        	return -1;
+        ArrayList<Integer> list=new ArrayList<>();
+        int[] openStop=new  int[n-m+1];
+        //closed petrol stop lists
+        for(int i=0;i<m;i++)
+        {
+        	list.add(closed[i]);
+        }
+        int j=0;
+        //openPetrol stop array
+        for(int i=0;i<=n;i++)
+        {
+        	if(!list.contains(i) && j<openStop.length)
+        	{
+        		openStop[j]=i;
+        		j++;
+        	}		
+        }
+        
+        int minFuel=Integer.MAX_VALUE;
+        int fuel=1;
+        //calculating cost and feasibility for each fuel type
+        while(fuel<=k)
+        {
+        	int fuelcost=0;
+        	int count=0;int fuelRem=0;
+        	boolean flag=true;
+        	//traversig through the openPetrol stops
+        	for(int l=0;l<openStop.length-1;l++)
+        	{
+        		if(openStop[l+1]-openStop[l]>fuel)
+        		{
+        			flag=false;
+        			break;
+        		}
+        		else
+        		{
+        			if(fuelRem<(openStop[l+1]-openStop[l]))
+        			{
+        				count++;
+        				fuelRem+=fuel;
+        			}
+        			fuelRem-=openStop[l+1]-openStop[l];	
+        		}
+        	}
+        	if(count>0 && flag!=false)
+        	{
+        	fuelcost=count*cost[fuel-1];
+        	}
+        	if(fuelcost<minFuel && fuelcost!=0)
+        		minFuel=fuelcost;
+        	fuel++;
+        }
+        if(minFuel<Integer.MAX_VALUE)
+        	return minFuel;
+        else
+	        return -1;
+    }
+}
