@@ -1,0 +1,74 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class NumberToString {
+	static String toSymbol(String sub)
+	{
+		if(sub.contains("plus"))
+			return "+";
+		if(sub.contains("minus"))
+			return "-";
+		if(sub.contains("one"))
+			return "1";
+		if(sub.contains("two"))
+			return "2";
+		if(sub.contains("three"))
+			return "3";
+		if(sub.contains("four"))
+			return "4";
+		if(sub.contains("five"))
+			return "5";
+		if(sub.contains("six"))
+			return "6";
+		if(sub.contains("seven"))
+			return "7";
+		if(sub.contains("eight"))
+			return "8";
+		if(sub.contains("nine"))
+			return "9";
+		return "";
+	}
+	public static void main(String args[])
+	{
+	Scanner sc=new Scanner(System.in);
+	String s=sc.next();
+	Boolean flag=true;
+     int index=0;
+     String ans="";
+	while(flag)
+	{
+		if(index+5==s.length())
+		{
+			flag=false;
+			String sub=s.substring(index,index+5);
+			ans+=toSymbol(sub);
+			continue;
+		}
+		if(index+4==s.length())
+		{
+			flag=false;
+			String sub=s.substring(index,index+4);
+			ans+=toSymbol(sub);
+			continue;
+		}
+		if(index+3==s.length())
+		{
+			flag=false;
+			String sub=s.substring(index,index+3);
+			ans+=toSymbol(sub);
+			continue;
+		}
+		String subString=s.substring(index, index+5);
+		String subans=toSymbol(subString);
+		ans+=subans;
+		if(subans=="")
+		{
+			index=index+1;
+			continue;
+		}
+		index=index+3;
+	}
+	System.out.println(ans);
+	}
+}
