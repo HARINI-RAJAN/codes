@@ -1,0 +1,64 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+public class FindAllAnagrams
+{
+	static void getAllPermutations(String str, String ans,ArrayList<String> list)
+    {
+ 
+        // If string is empty
+        if (str.length() == 0) {
+           list.add(ans);
+            return;
+        }
+ 
+        for (int i = 0; i < str.length(); i++) {
+ 
+            // ith character of str
+            char ch = str.charAt(i);
+ 
+            // Rest of the string after excluding
+            // the ith character
+            String ros = str.substring(0, i) +
+                         str.substring(i + 1);
+ 
+            // Recursive call
+            getAllPermutations(ros, ans + ch,list);
+        }
+    }
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner sc=new Scanner(System.in);
+      int n=sc.nextInt();
+      String s=sc.next();
+      int m=sc.nextInt();
+      String p=sc.next();
+      HashMap<String,Integer> map=new HashMap<>();
+      for(int i=0;i<n-m;i++)
+        {
+          String sub=s.substring(i,i+m);
+          if(!map.containsKey(sub))
+            map.put(sub,i);
+        }
+//      for (Map.Entry<String, Integer> entry : map.entrySet()) {
+//    		System.out.println(entry.getKey() + " = " + entry.getValue());
+//    	}
+      ArrayList<String> allComb=new ArrayList<>();
+      getAllPermutations(p,"",allComb);
+      Iterator<String> it=allComb.iterator();
+      ArrayList<Integer> list=new ArrayList<>();
+      while(it.hasNext())
+      {
+    	  String d=it.next();
+    	  if(map.containsKey(d))
+    	  {
+    		  list.add(map.get(d));
+    	  }
+      }
+      for(int i=0;i<list.size();i++)
+      {
+    	  System.out.print(list.get(i)+ " ");
+      }
+	}
+}
