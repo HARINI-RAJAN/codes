@@ -8,8 +8,8 @@ class Solution {
         {
             return;
         }
-            int Scount=mapS.get(ch);
-            int Pcount=mapElement.getValue();
+        int Scount=mapS.get(ch);
+        int Pcount=mapElement.getValue();
         if(mapS.containsKey(ch) && Scount!=Pcount)
         {
             return;
@@ -18,10 +18,10 @@ class Solution {
 		list.add(i);
 	}
     public List<Integer> findAnagrams(String s, String p) {
-         int k=p.length();
-        HashMap<Character,Integer> mapP=new HashMap<>();
-        List<Integer> list=new ArrayList<>();
-      //hashMap for string p
+    int k=p.length();
+    HashMap<Character,Integer> mapP=new HashMap<>();
+    HashMap<Character,Integer> mapS=new HashMap<>();
+    List<Integer> list=new ArrayList<>();
       for(int i=0;i<p.length();i++)
       {
           char c=p.charAt(i);
@@ -29,19 +29,17 @@ class Solution {
       }
       int i=0;
       int j=0;
-      HashMap<Character,Integer> mapS=new HashMap<>();
       int count=0;
+    while(j<k-1 && j<s.length())
+    {
+        char c=s.charAt(j);
+        mapS.put(c,mapS.getOrDefault(c, 0)+1); 
+        j++;
+    }
       while(i<s.length()-k+1 && j<s.length())
       {
-    	  char c=s.charAt(j);
-          mapS.put(c,mapS.getOrDefault(c, 0)+1);
-          if(count<k-1)
-          {
-        	  j++;
-        	  count++;
-          }
-          else
-          {
+              char c=s.charAt(j);
+              mapS.put(c,mapS.getOrDefault(c, 0)+1);
         	  checkAnagram(mapP,mapS,list,i);
         	  char iChar=s.charAt(i);
         	  if(mapS.get(iChar)>1)
@@ -50,8 +48,9 @@ class Solution {
         		  mapS.remove(iChar);
         	  i++;
         	  j++;
-          }
+             
       }
     return list;  
-  }      
+  }
+        
 }
