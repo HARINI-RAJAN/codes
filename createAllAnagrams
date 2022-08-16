@@ -1,0 +1,57 @@
+class Solution {
+    public void checkAnagram(HashMap<Character,Integer> mapS,HashMap<Character,Integer> mapP,List<Integer> list,int i)
+	{
+		for (Map.Entry<Character,Integer> mapElement : mapP.entrySet()) 
+        {
+        char ch=mapElement.getKey();
+        if(!mapS.containsKey(ch))
+        {
+            return;
+        }
+            int Scount=mapS.get(ch);
+            int Pcount=mapElement.getValue();
+        if(mapS.containsKey(ch) && Scount!=Pcount)
+        {
+            return;
+        }
+       }
+		list.add(i);
+	}
+    public List<Integer> findAnagrams(String s, String p) {
+         int k=p.length();
+        HashMap<Character,Integer> mapP=new HashMap<>();
+        List<Integer> list=new ArrayList<>();
+      //hashMap for string p
+      for(int i=0;i<p.length();i++)
+      {
+          char c=p.charAt(i);
+          mapP.put(c,mapP.getOrDefault(c,0)+1);
+      }
+      int i=0;
+      int j=0;
+      HashMap<Character,Integer> mapS=new HashMap<>();
+      int count=0;
+      while(i<s.length()-k+1 && j<s.length())
+      {
+    	  char c=s.charAt(j);
+          mapS.put(c,mapS.getOrDefault(c, 0)+1);
+          if(count<k-1)
+          {
+        	  j++;
+        	  count++;
+          }
+          else
+          {
+        	  checkAnagram(mapP,mapS,list,i);
+        	  char iChar=s.charAt(i);
+        	  if(mapS.get(iChar)>1)
+        		  mapS.put(iChar, mapS.get(iChar)-1);
+        	  else
+        		  mapS.remove(iChar);
+        	  i++;
+        	  j++;
+          }
+      }
+    return list;  
+  }      
+}
